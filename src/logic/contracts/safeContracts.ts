@@ -15,11 +15,21 @@ import { SPENDING_LIMIT_MODULE_ADDRESS } from 'src/utils/constants'
 
 import SpendingLimitModule from './artifacts/AllowanceModule.json'
 
-export const SENTINEL_ADDRESS = '0x0000000000000000000000000000000000000001'
-export const MULTI_SEND_ADDRESS = '0x8d29be29923b68abfdd21e541b9374737b49cdad'
-export const SAFE_MASTER_COPY_ADDRESS = '0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F'
-export const DEFAULT_FALLBACK_HANDLER_ADDRESS = '0xd5D82B6aDDc9027B22dCA772Aa68D5d74cdBdF44'
-export const SAFE_MASTER_COPY_ADDRESS_V10 = '0xb6029EA3B2c51D09a50B53CA8012FeEB05bDa35A'
+//for opera net
+import { GNOSIS_TESTNET_ADDRESSES } from '../../web3.constants/addresses'
+import gnosis_safe_abi from '../../web3.constants/gnosis_safe'
+import proxy_factory_abi from '../../web3.constants/proxy_factory'
+import safe_master_copy_address_v_10 from '../../web3.constants/safe_master_copy_address_v_10'
+
+export const SENTINEL_ADDRESS = GNOSIS_TESTNET_ADDRESSES.SENTINEL_ADDRESS
+export const MULTI_SEND_ADDRESS = GNOSIS_TESTNET_ADDRESSES.MULTISEND
+export const SAFE_MASTER_COPY_ADDRESS = GNOSIS_TESTNET_ADDRESSES.MASTERCOPY
+export const DEFAULT_FALLBACK_HANDLER_ADDRESS = GNOSIS_TESTNET_ADDRESSES.DEFAULTCALLBACKHANDLER
+export const SAFE_MASTER_COPY_ADDRESS_V10 = GNOSIS_TESTNET_ADDRESSES.SAFE_MASTER_COPY_ADDRESS_V10
+
+const Gnosis_Safe_ABI = gnosis_safe_abi
+const Proxy_Factory_ABI = proxy_factory_abi
+const Safe_Master_Copy_Address_V_10_ABI = safe_master_copy_address_v_10
 
 let proxyFactoryMaster: GnosisSafeProxyFactory
 let safeMaster: GnosisSafe
@@ -34,8 +44,13 @@ export const getGnosisSafeContract = (web3: Web3, networkId: ETHEREUM_NETWORK) =
   // TODO: this may not be the most scalable approach,
   //  but up until v1.2.0 the address is the same for all the networks.
   //  So, if we can't find the network in the Contract artifact, we fallback to MAINNET.
-  const contractAddress = networks[networkId]?.address ?? networks[ETHEREUM_NETWORK.MAINNET].address
-  return (new web3.eth.Contract(GnosisSafeSol.abi as AbiItem[], contractAddress) as unknown) as GnosisSafe
+
+  // const contractAddress = networks[networkId]?.address ?? networks[ETHEREUM_NETWORK.MAINNET].address
+  // return (new web3.eth.Contract(GnosisSafeSol.abi as AbiItem[], contractAddress) as unknown) as GnosisSafe
+
+  //adapt to Opera testnet
+  const contractAddress = GNOSIS_TESTNET_ADDRESSES.GNOSIS_SAFE
+  return (new web3.eth.Contract(Gnosis_Safe_ABI as AbiItem[], contractAddress) as unknown) as GnosisSafe
 }
 
 /**
@@ -44,12 +59,19 @@ export const getGnosisSafeContract = (web3: Web3, networkId: ETHEREUM_NETWORK) =
  * @param {ETHEREUM_NETWORK} networkId
  */
 const getProxyFactoryContract = (web3: Web3, networkId: ETHEREUM_NETWORK): GnosisSafeProxyFactory => {
-  const networks = ProxyFactorySol.networks
   // TODO: this may not be the most scalable approach,
   //  but up until v1.2.0 the address is the same for all the networks.
   //  So, if we can't find the network in the Contract artifact, we fallback to MAINNET.
-  const contractAddress = networks[networkId]?.address ?? networks[ETHEREUM_NETWORK.MAINNET].address
-  return (new web3.eth.Contract(ProxyFactorySol.abi as AbiItem[], contractAddress) as unknown) as GnosisSafeProxyFactory
+
+  //original gnosis
+
+  // const networks = ProxyFactorySol.networks
+  // const contractAddress = networks[networkId]?.address ?? networks[ETHEREUM_NETWORK.MAINNET].address
+  // return (new web3.eth.Contract(ProxyFactorySol.abi as AbiItem[], contractAddress) as unknown) as GnosisSafeProxyFactory
+
+  //adapt to Opera testnet
+  const contractAddress = GNOSIS_TESTNET_ADDRESSES.PROXY_FACTORY_CONTRACT
+  return (new web3.eth.Contract(Proxy_Factory_ABI as AbiItem[], contractAddress) as unknown) as GnosisSafeProxyFactory
 }
 
 /**
@@ -57,6 +79,13 @@ const getProxyFactoryContract = (web3: Web3, networkId: ETHEREUM_NETWORK): Gnosi
  */
 export const getSpendingLimitContract = () => {
   const web3 = getWeb3()
+
+  //original for gnosis
+  // return (new web3.eth.Contract(
+  //   SpendingLimitModule.abi as AbiItem[],
+  //   SPENDING_LIMIT_MODULE_ADDRESS,
+  // ) as unknown) as AllowanceModule
+
   return (new web3.eth.Contract(
     SpendingLimitModule.abi as AbiItem[],
     SPENDING_LIMIT_MODULE_ADDRESS,
@@ -106,6 +135,17 @@ export const getSafeDeploymentTransaction = (
       ZERO_ADDRESS,
     )
     .encodeABI()
+  console.log('proxy factory master methods ')
+  console.log(
+    safeAccounts,
+    numConfirmations,
+    ZERO_ADDRESS,
+    '0x',
+    DEFAULT_FALLBACK_HANDLER_ADDRESS,
+    ZERO_ADDRESS,
+    0,
+    ZERO_ADDRESS,
+  )
   return proxyFactoryMaster.methods.createProxyWithNonce(safeMaster.options.address, gnosisSafeData, safeCreationSalt)
 }
 
@@ -137,10 +177,12 @@ export const estimateGasForDeployingSafe = async (
   })
   const gasPrice = await calculateGasPrice()
 
+  console.log('gasPrice is ', gasPrice)
+
   return gas * parseInt(gasPrice, 10)
 }
 
 export const getGnosisSafeInstanceAt = (safeAddress: string): GnosisSafe => {
   const web3 = getWeb3()
-  return (new web3.eth.Contract(GnosisSafeSol.abi as AbiItem[], safeAddress) as unknown) as GnosisSafe
+  return (new web3.eth.Contract(Gnosis_Safe_ABI as AbiItem[], safeAddress) as unknown) as GnosisSafe
 }

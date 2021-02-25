@@ -10,9 +10,9 @@ const baseConfig: EnvironmentSettings = {
     url: 'https://ethgasstation.info/json/ethgasAPI.json',
     gasParameter: 'average',
   },
-  rpcServiceUrl: 'http://localhost:4447',
-  networkExplorerName: 'Etherscan',
-  networkExplorerUrl: 'https://rinkeby.etherscan.io',
+  rpcServiceUrl: 'https://xapi.testnet.fantom.network/lachesis',
+  networkExplorerName: 'FTMScan',
+  networkExplorerUrl: 'https://explorer.testnet.fantom.network',
   networkExplorerApiUrl: 'https://api-rinkeby.etherscan.io/api',
 }
 
@@ -26,7 +26,7 @@ const local: NetworkConfig = {
     id: ETHEREUM_NETWORK.LOCAL,
     backgroundColor: '#E8673C',
     textColor: '#ffffff',
-    label: 'LocalRPC',
+    label: 'Opera Testnet',
     isTestNet: true,
     nativeCoin: {
       address: '0x000',

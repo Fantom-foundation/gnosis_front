@@ -34,7 +34,7 @@ const httpProviderOptions = {
 export const web3ReadOnly = new Web3(
   process.env.NODE_ENV !== 'test'
     ? new Web3.providers.HttpProvider(getRpcServiceUrl(), httpProviderOptions)
-    : 'ws://localhost:8545',
+    : 'https://xapi.testnet.fantom.network/lachesis',
 )
 
 let web3 = web3ReadOnly

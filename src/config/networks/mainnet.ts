@@ -9,10 +9,10 @@ const baseConfig: EnvironmentSettings = {
     url: 'https://ethgasstation.info/json/ethgasAPI.json',
     gasParameter: 'average',
   },
-  rpcServiceUrl: 'https://mainnet.infura.io:443/v3',
-  networkExplorerName: 'Etherscan',
-  networkExplorerUrl: 'https://etherscan.io',
-  networkExplorerApiUrl: 'https://api.etherscan.io/api',
+  rpcServiceUrl: 'https://rpc.fantom.network',
+  networkExplorerName: 'FTMScan',
+  networkExplorerUrl: 'https://ftmscan.com/',
+  networkExplorerApiUrl: 'https://api.ftmscan.com/api',
 }
 
 const mainnet: NetworkConfig = {
@@ -35,12 +35,12 @@ const mainnet: NetworkConfig = {
     id: ETHEREUM_NETWORK.MAINNET,
     backgroundColor: '#E8E7E6',
     textColor: '#001428',
-    label: 'Mainnet',
+    label: 'Opera',
     isTestNet: false,
     nativeCoin: {
       address: '0x000',
-      name: 'Ether',
-      symbol: 'ETH',
+      name: 'Fantom',
+      symbol: 'FTM',
       decimals: 18,
       logoUri: EtherLogo,
     },

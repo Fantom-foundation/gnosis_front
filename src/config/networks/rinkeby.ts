@@ -1,17 +1,14 @@
 import EtherLogo from 'src/config/assets/token_eth.svg'
-import { EnvironmentSettings, ETHEREUM_NETWORK, NetworkConfig } from 'src/config/networks/network.d'
+import { EnvironmentSettings, ETHEREUM_NETWORK, FEATURES, NetworkConfig, WALLETS } from 'src/config/networks/network.d'
 
 const baseConfig: EnvironmentSettings = {
   clientGatewayUrl: 'https://safe-client.rinkeby.staging.gnosisdev.com/v1',
   txServiceUrl: 'https://safe-transaction.staging.gnosisdev.com/api/v1',
   safeAppsUrl: 'https://safe-apps.dev.gnosisdev.com',
-  gasPriceOracle: {
-    url: 'https://ethgasstation.info/json/ethgasAPI.json',
-    gasParameter: 'average',
-  },
-  rpcServiceUrl: 'https://rinkeby.infura.io:443/v3',
-  networkExplorerName: 'Etherscan',
-  networkExplorerUrl: 'https://rinkeby.etherscan.io',
+  gasPrice: 1e9,
+  rpcServiceUrl: 'https://xapi.testnet.fantom.network/lachesis',
+  networkExplorerName: 'FTMTestScan',
+  networkExplorerUrl: 'https://explorer.testnet.fantom.network',
   networkExplorerApiUrl: 'https://api-rinkeby.etherscan.io/api',
 }
 
@@ -35,16 +32,31 @@ const rinkeby: NetworkConfig = {
     id: ETHEREUM_NETWORK.RINKEBY,
     backgroundColor: '#E8673C',
     textColor: '#ffffff',
-    label: 'Rinkeby',
+    label: 'Opera Testnet',
     isTestNet: true,
     nativeCoin: {
       address: '0x000',
-      name: 'Ether',
-      symbol: 'ETH',
+      name: 'FTM',
+      symbol: 'FTM',
       decimals: 18,
       logoUri: EtherLogo,
     },
   },
+  disabledWallets: [
+    WALLETS.TREZOR,
+    WALLETS.LEDGER,
+    WALLETS.COINBASE,
+    WALLETS.FORTMATIC,
+    WALLETS.OPERA,
+    WALLETS.OPERA_TOUCH,
+    WALLETS.TORUS,
+    WALLETS.TRUST,
+    WALLETS.WALLET_CONNECT,
+    WALLETS.WALLET_LINK,
+    WALLETS.AUTHEREUM,
+    WALLETS.LATTICE,
+  ],
+  disabledFeatures: [FEATURES.DOMAIN_LOOKUP],
 }
 
 export default rinkeby

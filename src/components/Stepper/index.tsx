@@ -119,6 +119,7 @@ function GnoStepper<V>(props: GnoStepperProps<V>): React.ReactElement {
     const { children, onSubmit } = props
     const isLastPage = page === React.Children.count(children) - 1
     if (isLastPage) {
+      console.log('this is  the final step to submit in creating the new safe')
       return onSubmit(formValues)
     }
 

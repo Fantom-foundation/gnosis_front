@@ -15,7 +15,9 @@ import { ensureOnce } from 'src/utils/singleton'
 
 export const getNetworkId = (): ETHEREUM_NETWORK => ETHEREUM_NETWORK[NETWORK]
 
-export const getNetworkName = (): string => ETHEREUM_NETWORK[getNetworkId()]
+export const getNetworkName = (): string => {
+  return ETHEREUM_NETWORK[getNetworkId()]
+}
 
 export const usesInfuraRPC = [ETHEREUM_NETWORK.MAINNET, ETHEREUM_NETWORK.RINKEBY].includes(getNetworkId())
 

@@ -17,6 +17,7 @@ let providerName
 const wallets = getSupportedWallets()
 
 export const onboard = Onboard({
+  dappId: '075f9d3a-d095-40fe-95db-37c501559502',
   networkId: networkId,
   subscriptions: {
     wallet: (wallet) => {
@@ -65,7 +66,6 @@ export const onboardUser = async (): Promise<boolean> => {
 
 export const onConnectButtonClick = async () => {
   const walletSelected = await onboard.walletSelect()
-
   // perform wallet checks only if user selected a wallet
   if (walletSelected) {
     await onboard.walletCheck()

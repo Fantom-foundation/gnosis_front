@@ -19,6 +19,12 @@ export type Notification = {
   dismissed?: boolean
 }
 
+const adaptToFantomNetwork = (network): string => {
+  if (network == 'MAINNET') return 'OPERA'
+  else if (network == 'RINKEBY') return 'OPERA TESTNET'
+  else return network
+}
+
 const NOTIFICATION_IDS = {
   UNLOCK_WALLET_MSG: 'UNLOCK_WALLET_MSG',
   CONNECT_WALLET_ERROR_MSG: 'CONNECT_WALLET_ERROR_MSG',
@@ -189,7 +195,7 @@ export const NOTIFICATIONS: Record<NotificationId, Notification> = {
     options: { variant: WARNING, persist: false, preventDuplicate: true, autoHideDuration: longDuration },
   },
   WRONG_NETWORK_MSG: {
-    message: `Wrong network: Please use ${getNetworkName()}`,
+    message: `Wrong network: Please use ${adaptToFantomNetwork(getNetworkName())}`,
     options: { variant: WARNING, persist: true, preventDuplicate: true },
   },
 

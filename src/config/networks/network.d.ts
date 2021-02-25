@@ -34,10 +34,10 @@ type Token = {
 }
 
 export enum ETHEREUM_NETWORK {
-  MAINNET = 1,
+  MAINNET = 250,
   MORDEN = 2,
   ROPSTEN = 3,
-  RINKEBY = 4,
+  RINKEBY = 4002,
   GOERLI = 5,
   KOVAN = 42,
   XDAI = 100,

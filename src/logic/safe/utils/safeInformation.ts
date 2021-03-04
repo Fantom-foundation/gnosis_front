@@ -20,10 +20,13 @@ export type SafeInfoError = {
 
 export const getSafeInfo = (safeAddress: string): Promise<void | SafeInfo> => {
   const safeInfoUrl = buildSafeInformationUrl(safeAddress)
+  console.log('safeInfoUrl is ', safeInfoUrl)
   return axios
     .get<SafeInfo, AxiosResponse<SafeInfo>>(safeInfoUrl)
     .then((response) => response.data)
     .catch((error: AxiosError<SafeInfoError>) => {
+      console.log('cannot fetch safeInfo')
+      console.log('safeInfoUrl is ', safeInfoUrl)
       console.error(
         'Failed to retrieve safe Information',
         error.response?.statusText ?? error.response?.data.message ?? error,

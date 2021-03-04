@@ -143,7 +143,7 @@ const fetchContractABI = memoize(
 
 const getNetworkExplorerApiKey = (networkExplorerName: string): string | undefined => {
   switch (networkExplorerName.toLowerCase()) {
-    case 'etherscan': {
+    case 'FTMScan': {
       return ETHERSCAN_API_KEY
     }
     default: {
@@ -182,7 +182,8 @@ export const getExplorerInfo = (hash: string): BlockScanInfo => {
 
   switch (networkInfo.id) {
     default: {
-      const type = hash.length > 42 ? 'tx' : 'address'
+      // const type = hash.length > 42 ? 'tx' : 'address'
+      const type = hash.length > 42 ? 'transactions' : 'address'
       return () => ({
         url: `${url}/${type}/${hash}`,
         alt: name || '',

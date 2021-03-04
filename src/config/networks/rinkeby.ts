@@ -3,7 +3,8 @@ import { EnvironmentSettings, ETHEREUM_NETWORK, FEATURES, NetworkConfig, WALLETS
 
 const baseConfig: EnvironmentSettings = {
   clientGatewayUrl: 'https://safe-client.rinkeby.staging.gnosisdev.com/v1',
-  txServiceUrl: 'https://safe-transaction.staging.gnosisdev.com/api/v1',
+  // txServiceUrl: 'https://safe-transaction.staging.gnosisdev.com/api/v1',
+  txServiceUrl: 'http://54.174.183.104:4012/safetnx/api/v1',
   safeAppsUrl: 'https://safe-apps.dev.gnosisdev.com',
   gasPrice: 1e9,
   rpcServiceUrl: 'https://xapi.testnet.fantom.network/lachesis',
@@ -24,7 +25,8 @@ const rinkeby: NetworkConfig = {
     production: {
       ...baseConfig,
       clientGatewayUrl: 'https://safe-client.rinkeby.gnosis.io/v1',
-      txServiceUrl: 'https://safe-transaction.rinkeby.gnosis.io/api/v1',
+      // txServiceUrl: 'https://safe-transaction.rinkeby.gnosis.io/api/v1',
+      txServiceUrl: 'http://54.174.183.104:4012/safetnx/api/v1',
       safeAppsUrl: 'https://apps.gnosis-safe.io',
     },
   },

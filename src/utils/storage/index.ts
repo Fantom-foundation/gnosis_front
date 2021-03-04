@@ -11,6 +11,7 @@ export const storage = new ImmortalStorage(stores)
 const PREFIX = `v2_${getNetworkName()}`
 
 export const loadFromStorage = async <T = unknown>(key: string): Promise<T | undefined> => {
+  console.log('loadFromStorage : loading')
   try {
     const stringifiedValue = await storage.get(`${PREFIX}__${key}`)
     if (stringifiedValue === null || stringifiedValue === undefined) {
@@ -25,6 +26,7 @@ export const loadFromStorage = async <T = unknown>(key: string): Promise<T | und
 }
 
 export const saveToStorage = async <T = unknown>(key: string, value: T): Promise<void> => {
+  console.log('saveToStorage : saving')
   try {
     const stringifiedValue = JSON.stringify(value)
     await storage.set(`${PREFIX}__${key}`, stringifiedValue)
@@ -34,6 +36,7 @@ export const saveToStorage = async <T = unknown>(key: string, value: T): Promise
 }
 
 export const removeFromStorage = async (key: string): Promise<void> => {
+  console.log('removeFromStorage : removing')
   try {
     await storage.remove(`${PREFIX}__${key}`)
   } catch (err) {
